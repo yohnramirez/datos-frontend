@@ -38,7 +38,14 @@ const Modal = ({ setShowModal }: ModalProps) => {
       },
     };
 
-    if (!data.imagen) {
+    // if (data.id_arbol) {
+    //   axios
+    //     .put("http://localhost:3000/dashboard" + data.id_arbol, formData, config)
+    //     .then((res) => console.log(res))
+    //     .catch((error) => console.log(error));
+    // }else{
+    // }
+    if (!data) {
       alert("Debes completar todos los campos");
       return;
     }
@@ -48,8 +55,9 @@ const Modal = ({ setShowModal }: ModalProps) => {
       .then((res) => console.log(res))
       .catch((error) => console.error(error));
 
-    setData({nombre: "", descripcion: "", imagen: "", ubicacion: ""})
-    setShowModal(false)
+
+    // setData({ nombre: "", descripcion: "", imagen: "", ubicacion: "" });
+    setShowModal(false);
   };
 
   return (

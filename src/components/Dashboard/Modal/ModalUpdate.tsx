@@ -1,27 +1,72 @@
-import {useState } from "react"
+import { useState, useEffect } from "react";
+import axios from "axios";
 import { Input, Textarea } from "@material-tailwind/react";
 
-interface ModalUpdateProps{
-    setShowModalUpdate: (show:boolean) => void;
+interface ModalProps {
+  setShowModalUpdate: (show: boolean) => void;
 }
-const ModalUpdate = ({setShowModalUpdate}:ModalUpdateProps) => {
 
-    const [dataUpdate, setDataUpdate] = useState({
-        nombre: "",
-        descripcion: "",
-        imagen: "",
-        ubicacion: "",
+const ModalUpdate = ({ setShowModalUpdate }: ModalProps) => {
+  const [data, setData] = useState({
+    id_arbol: null,
+    nombre: "",
+    descripcion: "",
+    imagen: "",
+    ubicacion: "",
+  });
+
+  const handleChange = ({ target }: any) => {
+    const { name, value } = target;
+    setData({
+      ...data,
+      [name]: value,
     });
+  };
 
+  const sendData = async (e: any) => {
+    e.preventDefault();
+
+    let formData = new FormData();
+
+    formData.append("nombre", data.nombre);
+    formData.append("descripcion", data.descripcion);
+    formData.append("imagen", data.imagen);
+    formData.append("ubicacion", data.ubicacion);
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+
+    const res = await axios.get("http://localhost:3000/dashboard/");
+    setData(res.data)
+
+    if (!data) {
+      alert("Debes completar todos los campos");
+      return;
+    }
+    axios
+      .put(
+        "http://localhost:3000/dashboard/",
+        formData,
+        config
+      )
+      .then((res) => console.log(res))
+      .catch((error) => console.log(error));
+
+    setShowModalUpdate(false);
+  };
   return (
-    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none font-playfair">
+    <>
+      <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none font-playfair">
         <div className="relative w-[1000px] my-6 mx-auto max-w-3xl">
           {/*content*/}
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
             {/*header*/}
             <div className="flex items-start justify-between p-5 border-b border-solid border-slate-200 rounded-t">
               <h3 className="text-3xl font-semibold">
-                Nuevo <span className="text-green">e</span>Tree
+                Editar <span className="text-green">e</span>Tree
               </h3>
               <button
                 className="p-1 ml-auto border-0 text-black hover:text-green float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -39,9 +84,9 @@ const ModalUpdate = ({setShowModalUpdate}:ModalUpdateProps) => {
                     label="Nombre"
                     size="md"
                     color="light-green"
-                    value={dataUpdate.nombre}
+                    value={data.nombre}
                     name="nombre"
-                    onChange={(e) => setDataUpdate(dataUpdate.nombre = e.target.value)}
+                    onChange={handleChange}
                   />
                 </div>
                 <div>
@@ -86,7 +131,9 @@ const ModalUpdate = ({setShowModalUpdate}:ModalUpdateProps) => {
           </div>
         </div>
       </div>
-  )
-}
+      <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+    </>
+  );
+};
 
-export default ModalUpdate
+export default ModalUpdate;

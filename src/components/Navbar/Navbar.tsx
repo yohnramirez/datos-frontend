@@ -22,6 +22,12 @@ const Navbar = () => {
         >
           Mi eTree
         </Link>
+        <Link
+          to="/dashboard"
+          className="font-bold bg-blue text-white p-2 rounded-md ease-in duration-150 hover:bg-green"
+        >
+          Dashboard
+        </Link>
       </div>
     </nav>
   );

@@ -13,10 +13,10 @@ interface CardProps {
   nombre: string;
   descripcion: string;
   ubicacion: string;
-  handleClick: () => void;
+  // handleModalUpdate: () => void;
 }
 
-const CardTree = ({ nombre, descripcion, ubicacion, handleClick }: CardProps) => {
+const CardTree = ({ nombre, descripcion, ubicacion }: CardProps) => {
   return (
     <Card className="w-80">
       <CardHeader floated={false} className="h-72">
@@ -40,7 +40,7 @@ const CardTree = ({ nombre, descripcion, ubicacion, handleClick }: CardProps) =>
       </CardBody>
       <CardFooter className="flex justify-between items-center gap-7 pt-2 bg-greenTransparent rounded-b-md">
         <Tooltip content="Editar">
-          <Typography as="button" onClick={handleClick} variant="lead">
+          <Typography as="button" variant="lead">
             <FiEdit fontSize={20} color="black" />
           </Typography>
         </Tooltip>

@@ -23,7 +23,7 @@ const VerticalNav = () => {
           />
           <NavLink
             text="Analiticas"
-            url="/analiticas"
+            url="/analitica"
             children={<AiOutlineBarChart fontSize={20} />}
           />
         </ul>

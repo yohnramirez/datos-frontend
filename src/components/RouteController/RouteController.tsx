@@ -4,25 +4,22 @@ import { useState, useEffect } from "react";
 const RouteController = ({ children, redirectTo = "/login" }: any) => {
   const [user, setUser] = useState(false);
 
-  const init = () => {
-    const auth = localStorage.getItem("auth");
+  // const init = () => {
+  //   const auth = localStorage.getItem("auth");
 
-    if (!auth) {
-      setUser(false);
-    } else {
-      if (JSON.parse(auth) === "yes") {
-        setUser(true);
-      } else {
-        setUser(false);
-      }
-    }
-};
-    // if (!user) {
-    // return <Navigate to={redirectTo} />;
-    // }
+  //   if (!auth) {
+  //     setUser(false);
+  //   } else {
+  //     setUser(true);
+  //   }
+  // };
 
-  useEffect(init, [])
-  
+  // useEffect(init, []);
+
+  // if (!user) {
+  //   return <Navigate to={redirectTo} />;
+  // }
+
   return children ? children : <Outlet />;
 };
 

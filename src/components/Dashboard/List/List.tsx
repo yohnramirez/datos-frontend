@@ -3,20 +3,23 @@ import { useState, useEffect } from "react";
 import Card from "../../Card/CardTree";
 
 interface ListProps {
-  handleClick: () => void;
+  handleModalUpdate: () => void;
 }
 
-const List = ({ handleClick }: ListProps) => {
+const List = ({ handleModalUpdate }: ListProps) => {
   const [list, setList] = useState([]);
 
-  useEffect(() => {
-    axios
+  const getTrees = async () => {
+    await axios
       .get("http://localhost:3000/dashboard/")
       .then((res) => {
         setList(res.data);
-        console.log(res.data);
       })
       .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    getTrees();
   }, []);
 
   return (
@@ -29,7 +32,7 @@ const List = ({ handleClick }: ListProps) => {
               nombre={item.nombre}
               descripcion={item.descripcion}
               ubicacion={item.ubicacion}
-              handleClick={handleClick}
+              handleModalUpdate={handleModalUpdate}
             />
           );
         })}
